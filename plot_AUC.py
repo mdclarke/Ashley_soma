@@ -37,16 +37,15 @@ pick = mne.pick_types(evoked.info, meg=True)
 data = evoked.data[pick[0], time_mask] 
 auc = np.sum(np.abs(data)) * len(data) * (1. / evoked.info['sfreq'])
 
-print('%s' %auc)
+print('AUC value: %s' % auc)
 
 # plot channel with peak and AUC window
 plt.figure()
 plt.plot(evoked.times, evoked.data[0])
 plt.axvline(peak[1], linestyle='-', color='r')
-plt.axvline(tmin, linestyle='--', color='y')
-plt.axvline(tmax, linestyle='--', color='y')
+plt.axvspan(tmin, tmax, alpha=0.15, color='r')
 plt.axhline(0, linestyle='--', color='k')
 plt.xlabel('time (s)')
 plt.ylabel('amplitude')
-plt.suptitle('Max channel: %s' %max_ch_name)
+plt.suptitle('Max channel: %s' % max_ch_name)
 plt.show()

@@ -5,18 +5,30 @@ Created on Mon May 11 11:21:50 2020
 
 @author: mdclarke
 """
-
 import mne
 from os import path as op
 import numpy as np
 from mne.utils import _time_mask
 import matplotlib.pyplot as plt
 
-path = '/storage/Maggie/'
+### change these
+condition = 'lip' # lip, foot or hand
+hemi = 'left' # left or right for lip condition
+###
 
+left = [] # left hemi sensors for lip condition
+right = []# right hemi sensors for lip condition
+
+path = '/storage/Maggie/'
 fname = op.join(path, 'Locations_40-sss_eq_soma3_408-ave.fif')
 
 evoked = mne.read_evokeds(fname)[0]
+
+if condition = 'lip' and hemi = 'left'
+  evoked.pick_channels(ch_names=left)
+if condition = 'lip' and hemi = 'right'
+  evoked.pick_channels(ch_names=right)
+
 evoked.data
 
 # find channel with highest value

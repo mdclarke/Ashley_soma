@@ -18,16 +18,21 @@ hemi = 'left' # left or right
 
 left = [] # left hemi sensors for lip condition
 right = [] # right hemi sensors for lip condition
+full = [] # hand/foot sensors
 
 path = '/storage/Maggie/'
 fname = op.join(path, 'Locations_40-sss_eq_soma3_408-ave.fif')
 
 evoked = mne.read_evokeds(fname)[0]
 
-if evoked.comment == 'lip' and hemi == 'left'
+if evoked.comment == 'lip' and hemi == 'left':
   evoked.pick_channels(ch_names=left)
-if evoked.comment == 'lip' and hemi == 'right'
+if evoked.comment == 'lip' and hemi == 'right':
   evoked.pick_channels(ch_names=right)
+if evoked.comment == 'foot' or 'hand':
+  evoked.pick_channels(ch_names=full)
+else:
+  print("No condition named in file")
 
 evoked.data
 

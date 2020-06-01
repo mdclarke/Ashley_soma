@@ -3,39 +3,47 @@
 """
 Created on Mon May 11 11:21:50 2020
 @author: mdclarke
+
+Find peak within a window for dipole moment, then compute area under the curve (AUC)
 """
 import mne
 from os import path as op
 import numpy as np
-from mne.utils import _time_mask
 import matplotlib.pyplot as plt
 
+### define time window of interest
+window_min = 0.07
+window_max = 0.14
+
 path = '/storage/Maggie/'
-fname = op.join(path, 'Locations_40-sss_eq_soma3_408-ave.dip')
+fname = op.join(path, 'soma2_387_hand_100window_xfit_waves.fif')
 
 dip = mne.read_dipole(fname)
+data = dip.data[0]
+times = dip.times
 
-# pick peak, define time window for peak here
-peak = dip.get_peak(return_amplitude=True,
-                      mode='abs', tmin=0.07, tmax=0.140) # early lip window
+assert len(data) == len(times)
 
-tmin = peak[1] - 0.015 # take 15 ms around peak
-tmax = peak[1] + 0.015
-time_mask = _time_mask(times=evoked.times, tmin=tmin, tmax=tmax,
-                       sfreq=evoked.info['sfreq'], raise_error=True)
+time_mask = (times>window_min) & (times<=window_max)
 
-data = evoked.data[time_mask] 
-auc = np.sum(np.abs(data)) * len(data) * (1. / evoked.info['sfreq'])
+data_mask = data[time_mask]
 
+# Find index of maximum value idx
+peak_idx = np.where(data == np.amax(data_mask))
+
+# time around peak for AUC calculation
+tmin = times[peak_idx] - 0.015 
+tmax = times[peak_idx] + 0.015
+
+auc = np.sum(np.abs(data)) * len(data) * (1. / dip.info['sfreq'])
 print('AUC value: %s' % auc)
 
 # plot channel with peak and AUC window
 plt.figure()
-plt.plot(evoked.times, evoked.data[0])
-plt.axvline(peak[1], linestyle='-', color='r')
+plt.plot(times, data)
+plt.axvline(times[peak_idx], linestyle='-', color='r')
 plt.axvspan(tmin, tmax, alpha=0.15, color='r')
-plt.axhline(0, linestyle='--', color='k')
 plt.xlabel('time (s)')
 plt.ylabel('amplitude')
-plt.suptitle('Max channel: %s' % max_ch_name)
+plt.title('dipole peak within window')
 plt.show()

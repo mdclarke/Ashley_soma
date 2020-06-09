@@ -25,7 +25,7 @@ foot = mne.read_evokeds(fname3)[0]
 foot.pick_types(meg='grad')
 
 # make dict
-ev_dict = [lip, hand, foot]
+ev_dict = {'lip': lip, 'hand': hand, 'foot': foot}
 
 # plot
 mne.viz.plot_compare_evokeds(ev_dict,legend='true') # plot averaged waveforms

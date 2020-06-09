@@ -11,8 +11,6 @@ from os import path as op
 
 path = '/Users/ashdrew/Documents/Soma_2/'
 
-#ch = 'MEG0732' #compare plot @ one sensor
-
 # filenames
 fname1 = op.join(path, 'grandaves', 'GrandAve_8infants_liponlygroup_40_Locations_N8-ave.fif')
 fname2 = op.join(path, 'grandaves', 'GrandAve_8infants_handonlygroup_40_Locations_N8-ave.fif')
@@ -30,6 +28,5 @@ foot.pick_types(meg='grad')
 ev_dict = [lip, hand, foot]
 
 # plot
-#mne.viz.plot_compare_evokeds(ev_dict, picks=ch, cmap='brg', legend='true', show_sensors='upper center', ylim=dict(grad=[-20,20])) #compare plot @ one sensor
-
-mne.viz.plot_compare_evokeds(ev_dict,legend='true', axes='topo')
+mne.viz.plot_compare_evokeds(ev_dict,legend='true') # plot averaged waveforms
+mne.viz.plot_compare_evokeds(ev_dict,legend='true', axes='topo') # plot waveform per channel

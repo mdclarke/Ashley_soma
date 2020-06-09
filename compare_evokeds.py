@@ -20,8 +20,11 @@ fname3 = op.join(path, 'grandaves', 'GrandAve_8infants_footonlygroup_40_Location
  
 # read evoked files  
 lip = mne.read_evokeds(fname1)[0]
+lip.pick_types(meg='grad')
 hand = mne.read_evokeds(fname2)[0]
+hand.pick_types(meg='grad')
 foot = mne.read_evokeds(fname3)[0]
+foot.pick_types(meg='grad')
 
 # make dict
 ev_dict = [lip, hand, foot]

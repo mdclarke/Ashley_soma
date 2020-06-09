@@ -28,5 +28,5 @@ foot.pick_types(meg='grad')
 ev_dict = {'lip': lip, 'hand': hand, 'foot': foot}
 
 # plot
-mne.viz.plot_compare_evokeds(ev_dict,legend='true') # plot averaged waveforms
-mne.viz.plot_compare_evokeds(ev_dict,legend='true', axes='topo') # plot waveform per channel
+mne.viz.plot_compare_evokeds(ev_dict,legend=True) # plot averaged waveforms
+mne.viz.plot_compare_evokeds(ev_dict,legend=True, axes='topo') # plot waveform per channel

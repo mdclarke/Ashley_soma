@@ -18,15 +18,12 @@ fname3 = op.join(path, 'grandaves', 'GrandAve_8infants_footonlygroup_40_Location
  
 # read evoked files  
 lip = mne.read_evokeds(fname1)[0]
-lip.pick_types(meg='grad')
 hand = mne.read_evokeds(fname2)[0]
-hand.pick_types(meg='grad')
 foot = mne.read_evokeds(fname3)[0]
-foot.pick_types(meg='grad')
 
 # make dict
 ev_dict = {'lip': lip, 'hand': hand, 'foot': foot}
 
 # plot
-mne.viz.plot_compare_evokeds(ev_dict,legend=True) # plot averaged waveforms
-mne.viz.plot_compare_evokeds(ev_dict,legend=True, axes='topo') # plot waveform per channel
+mne.viz.plot_compare_evokeds(ev_dict,legend=True, picks='grad') # plot averaged waveforms
+mne.viz.plot_compare_evokeds(ev_dict,legend=True, axes='topo', picks='grad') # plot waveform per channel

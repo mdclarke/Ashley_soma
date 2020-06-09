@@ -32,4 +32,4 @@ ev_dict = [lip, hand, foot]
 # plot
 #mne.viz.plot_compare_evokeds(ev_dict, picks=ch, cmap='brg', legend='true', show_sensors='upper center', ylim=dict(grad=[-20,20])) #compare plot @ one sensor
 
-mne.viz.plot_compare_evokeds(ev_dict,legend='true')
+mne.viz.plot_compare_evokeds(ev_dict,legend='true', axes='topo')

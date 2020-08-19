@@ -55,6 +55,7 @@ data = evoked.data[pick[0], time_mask]
 auc = np.sum(np.abs(data)) * len(data) * (1. / evoked.info['sfreq'])
 
 print('AUC value: %s' % auc)
+print('peak latency (s): %s' % peak[1])
 
 # plot channel with peak and AUC window
 plt.figure()

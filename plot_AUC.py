@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Mon May 11 11:21:50 2020
-
 @author: mdclarke
-
 """
+
 import mne
 from os import path as op
 import numpy as np

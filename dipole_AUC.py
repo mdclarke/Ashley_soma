@@ -21,11 +21,8 @@ fname = op.join(path, 'soma2_387_hand_100window_xfit_waves.fif')
 dip = mne.read_dipole(fname)
 data = dip.data[0]
 times = dip.times
-
 assert len(data) == len(times)
-
 time_mask = (times>window_min) & (times<=window_max)
-
 data_mask = data[time_mask]
 
 # Find index of maximum value idx

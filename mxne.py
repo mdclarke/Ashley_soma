@@ -3,6 +3,7 @@ import os.path as op
 import numpy as np
 import matplotlib.pyplot as plt
 import mne
+
 fname_evoked = 'soma3_437/inverse/Locations_40-sss_eq_soma3_437-ave.fif'
 fname_inv = 'soma3_437/inverse/soma3_437-40-sss-meg-free-inv.fif'
 fname_fwd = 'soma3_437/forward/soma3_437-sss-fwd.fif'

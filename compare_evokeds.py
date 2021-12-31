@@ -1,28 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec 30 16:41:17 2021
-
-@author: mdclarke
-
-Plot (interactive) somatosensory evoked grand averages
+Created on Fri Nov 22 11:25:53 2019
+@author: ashdrew
 """
 import mne
-import os.path as op
+from os import path as op
+path = '/Users/ashdrew/Documents/Soma_2/'
+# filenames
+fname1 = op.join(path, 'grandaves', 'GrandAve_8infants_liponlygroup_40_Locations_N8-ave.fif')
+fname2 = op.join(path, 'grandaves', 'GrandAve_8infants_handonlygroup_40_Locations_N8-ave.fif')
+fname3 = op.join(path, 'grandaves', 'GrandAve_8infants_footonlygroup_40_Locations_N8-ave.fif')
 
-path = '/home/mdclarke/Desktop/soma_files' #change this to shared path where grand average files live
+ # read evoked files  
+ lip = mne.read_evokeds(fname1)[0]
+ lip.pick_types(meg='grad')
+ hand = mne.read_evokeds(fname2)[0]
+ hand.pick_types(meg='grad')
+ foot = mne.read_evokeds(fname3)[0]
+ foot.pick_types(meg='grad')
 
-ev1 = mne.read_evokeds(op.join(path, 'GrandAve_8infants_handgroup_40_Locations_N8-ave.fif'))[0]
-assert ev1.comment
-ev2 = mne.read_evokeds(op.join(path, 'GrandAve_8infants_footgroup_40_Locations_N8-ave.fif'))[0]
-assert ev2.comment
-ev3 = mne.read_evokeds(op.join(path, 'GrandAve_8infants_lipgroup_40_Locations_N8-ave.fif'))[0]
-assert ev3.comment
+ # make dict
+ ev_dict = {'lip': lip, 'hand': hand, 'foot': foot}
 
-evokeds_list = [ev1, ev2, ev3]
-
-for e in evokeds_list:
-    e.pick_types(meg='grad')
-
-# plot - is interactive so if you click on a channel it will blow it up for you
-mne.viz.plot_evoked_topo(evokeds_list, color=['r','k', 'C0'], title='Infant Somatosensory')
+ # plot
+ mne.viz.plot_compare_evokeds(ev_dict,legend=True) # plot averaged waveforms
+ mne.viz.plot_compare_evokeds(ev_dict,legend=True, axes='topo') # plot waveform per channel

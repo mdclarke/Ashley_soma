@@ -23,6 +23,8 @@ evokeds_list = [ev1, ev2, ev3]
 
 for e in evokeds_list:
     e.pick_types(meg='grad')
+    e.crop(tmax=0.4)
 
 # plot - is interactive, click on a sensor to see close up plot
-mne.viz.plot_evoked_topo(evokeds_list, color=['r','k', 'C0'], title='Infant Somatosensory')
+mne.viz.plot_evoked_topo(evokeds_list, color=['r','k', 'C0'], 
+                         title='Infant Somatosensory', vline=None)

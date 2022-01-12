@@ -13,7 +13,7 @@ import os.path as op
 import numpy as np
 
 path = '/Users/ashdrew/Soma_Data/TWA/dips/'
-dips = [408, 409] # enter subject numbers for dipoles you want plotted here
+dips = ['408_0', '409_1'] # enter subject numbers for dipoles you want plotted here
 
 for d in dips:
     dip_fname = op.join(path, 'soma3_%s.dip' %d)
@@ -32,5 +32,5 @@ for d in dips:
     plt.axvline(x = best_dip_time, color = 'b', 
                 label = 'Max GOF: %d' %max_gof + '%', alpha=0.5, 
                 linestyle='dashed')
-    plt.title('dipole %d' %d)
+    plt.title('dipole %s' %d)
     plt.legend()

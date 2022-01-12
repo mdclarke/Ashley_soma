@@ -100,6 +100,11 @@ def create_mxne(subjects, p, extra_tag=''):
         save_array[0] = gof_mxne
         save_array[1] = residual_mxne
         
+        # Save indivdiual dipoles
+        for s in subjects:
+          for ii in range(len(dipole_mxne)):
+            dipole_mxne[ii].save('/Users/ashdrew/Soma_Data/TWA/dips/%s_%d.dip' %(s, ii), overwrite=True)
+        
         save_file = output_stem + '.npy'
         np.save(save_file, save_array, fix_imports=False, overwrite=True)
 

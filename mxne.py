@@ -43,11 +43,11 @@ path = '/storage/'
 
 fname_evoked = op.join(path, 'inverse', 
                        'Locations_40-sss_eq_%s-ave.fif' %subj)
-fname_src = op.join(subjects_dir, 'bem', '%s-oct-6-src.fif' %subj)
+fname_src = op.join(subjects_dir, '%s' %subj, 'bem', '%s-oct-6-src.fif' %subj)
 fname_cov = op.join(path, 'covariance', '%s-40-sss-cov.fif' %subj)
 fname_trans = op.join(path, 'trans', '%s-trans.fif' %subj)
 fname_epochs = op.join(path, 'epochs', 'All_40-sss_%s-epo.fif' %subj)
-fname_bem = op.join(subjects_dir, 'bem', '%s-5120-bem-sol.fif' %subj)
+fname_bem = op.join(subjects_dir, '%s' %subj, 'bem', '%s-5120-bem-sol.fif' %subj)
 
 epochs = mne.read_epochs(fname_epochs)
 cov = mne.read_cov(fname_cov)
@@ -114,5 +114,5 @@ kwargs = dict(src=inv['src'], subjects_dir=subjects_dir, initial_time=0.124,
               views=['axial', 'sagittal', 'coronal'], view_layout='horizontal',
               size=(900, 300), show_traces=0.5, surface='pial')
 with mne.viz.use_3d_backend('pyvista'):
-    brain_mne = stc_mne.plot_3d(**kwargs)
-    brain_mxne = stc_mxne.plot_3d(**kwargs)
+    brain_mne = stc_mne.plot(**kwargs)
+    brain_mxne = stc_mxne.plot(**kwargs)

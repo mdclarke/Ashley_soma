@@ -36,7 +36,7 @@ left = ['MEG0623', 'MEG0622', 'MEG0621', 'MEG0643', 'MEG0642', 'MEG0641',
 right = []
 
 ## select channel selection ##
-hemi = left
+hemi = 'left'
 
 subjects_dir = '/storage/Maggie/anat/subjects/'
 path = '/storage/'
@@ -56,9 +56,9 @@ src = mne.read_source_spaces(fname_src)
 bem = mne.read_bem_solution(fname_bem)
 
 evoked = mne.read_evokeds(fname_evoked, condition='lip')
-if hemi == left:
+if hemi == 'left':
     evoked.pick_channels(left)
-elif hemi == right:
+elif hemi == 'right':
     evoked.pick_channels(right)
 else:
     print('choose left or right channel selection')

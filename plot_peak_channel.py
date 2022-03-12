@@ -72,3 +72,6 @@ plt.xlabel('time (s)')
 plt.ylabel('amplitude')
 plt.suptitle('Max channel: %s' % peak[0])
 plt.show()
+
+# plot sensor location on head
+mne.viz.plot_sensors(ev.info, show_names=True)

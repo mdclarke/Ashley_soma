@@ -18,10 +18,9 @@ path = '/storage/' # change this to shared path where grand average files live
 evoked = mne.read_evokeds(op.join(path, 
                                   'GrandAve_8infants_lipgroup_40_Locations_N8-ave(1).fif'))[0]
 
-
-### change th ese ###
+### change these ###
 hemi = 'right' # left or right
-tmin,tmax = 0.300,0.400
+tmin,tmax = 0.300,0.400 # time window where you want to find largest peak
 ###
 
 left = ['MEG0342','MEG0343','MEG0323','MEG0322','MEG0332',
@@ -47,33 +46,24 @@ right = ['MEG1033','MEG1032','MEG1242','MEG1243','MEG1233',
 
 ev = evoked.copy()
 
-if ev.comment == 'lip' and hemi == 'left':
+if hemi == 'left':
   ev.pick_channels(ch_names=left)
-if ev.comment == 'lip' and hemi == 'right':
-  ev.pick_channels(ch_names=right)
-if ev.comment == 'foot' and hemi == 'left':
-  ev.pick_channels(ch_names=left)
-if ev.comment == 'foot' and hemi == 'right':
-  ev.pick_channels(ch_names=right) 
-if ev.comment == 'hand'and hemi == 'left':
-  ev.pick_channels(ch_names=left)
-if ev.comment == 'hand'and hemi == 'right':
+if hemi == 'right':
   ev.pick_channels(ch_names=right)
 else:
-  print("No condition named in file")
+  print("Choose left ot right hemispshere")
 
-#change to min for neg peak
+# find channel with largest peak 
 max_ch = np.where(ev.data == max(ev.data.min(), ev.data.max(), key=abs))[0]
 max_ch_name = ev.info['ch_names'][max_ch[0]]
 print(max_ch_name)
 ev = ev.pick_channels([max_ch_name])
 peak = ev.get_peak(return_amplitude=True,
                       mode='abs') # early lip window value
-
 # plot all chanels
 evoked.plot_topo()
 
-# plot chosen channel with peak and AUC window
+# plot chosen channel with peak latency
 plt.figure()
 plt.plot(ev.times, ev.data[0])
 plt.axvline(peak[1], linestyle='-', color='r')

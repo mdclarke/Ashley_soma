@@ -72,7 +72,7 @@ evoked.plot_topo()
 # plot chosen channel with peak latency
 plt.figure()
 plt.plot(ev.times, ev.data[0]*10**13)
-plt.axvline(peak[1], linestyle='-', color='r')
+plt.axvline(peak[1], linestyle='-', color='r') # comment this out to take off red peak line
 plt.axvline(0, linestyle='--', color='g')
 plt.axhline(0, linestyle='-', color='k')
 plt.xlabel('Time (s)')

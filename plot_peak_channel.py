@@ -62,8 +62,9 @@ max_ch = np.where(ev_crop.data == max(ev_crop.data.min(),
 max_ch_name = ev_crop.info['ch_names'][max_ch[0]]
 print(max_ch_name)
 ev = ev.pick_channels([max_ch_name])
-peak = ev.get_peak(return_amplitude=True,
-                      mode='abs') # early lip window value
+ev_crop.pick_channels([max_ch_name])
+peak = ev_crop.get_peak(return_amplitude=True,
+                        mode='abs') # early lip window value
 # plot all chanels
 evoked.plot_topo()
 

@@ -17,10 +17,11 @@ path = '/storage/' # change this to shared path where grand average files live
 
 evoked = mne.read_evokeds(op.join(path, 
                                   'GrandAve_8infants_lipgroup_40_Locations_N8-ave(1).fif'))[0]
+evoked.crop(-0.05,0.4)
 
 ### change these ###
 hemi = 'right' # left or right
-tmin,tmax = 0.300,0.400 # time window where you want to find largest peak
+tmin,tmax = 0.3,0.4 # time window where you want to find largest peak
 ###
 
 left = ['MEG0342','MEG0343','MEG0323','MEG0322','MEG0332',
@@ -45,17 +46,22 @@ right = ['MEG1033','MEG1032','MEG1242','MEG1243','MEG1233',
          'MEG2433','MEG2022','MEG2023']
 
 ev = evoked.copy()
+ev_crop = evoked.copy()
+ev_crop.crop(tmin, tmax)
 
 if hemi == 'left':
   ev.pick_channels(ch_names=left)
+  ev_crop.pick_channels(ch_names=left)
 if hemi == 'right':
   ev.pick_channels(ch_names=right)
+  ev_crop.pick_channels(ch_names=right)
 else:
   print("Choose left ot right hemispshere")
 
 # find channel with largest peak 
-max_ch = np.where(ev.data == max(ev.data.min(), ev.data.max(), key=abs))[0]
-max_ch_name = ev.info['ch_names'][max_ch[0]]
+max_ch = np.where(ev_crop.data == max(ev_crop.data.min(), 
+                                      ev_crop.data.max(), key=abs))[0]
+max_ch_name = ev_crop.info['ch_names'][max_ch[0]]
 print(max_ch_name)
 ev = ev.pick_channels([max_ch_name])
 peak = ev.get_peak(return_amplitude=True,
@@ -65,11 +71,13 @@ evoked.plot_topo()
 
 # plot chosen channel with peak latency
 plt.figure()
-plt.plot(ev.times, ev.data[0])
+plt.plot(ev.times, ev.data[0]*10**13)
 plt.axvline(peak[1], linestyle='-', color='r')
+plt.axvline(0, linestyle='--', color='g')
 plt.axhline(0, linestyle='--', color='k')
-plt.xlabel('time (s)')
-plt.ylabel('amplitude')
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude (fT/cm)')
+plt.ylim(-20, 20) # change Y-axis limits
 plt.suptitle('Max channel: %s' % peak[0])
 plt.show()
 

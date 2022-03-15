@@ -46,6 +46,7 @@ right = ['MEG1033','MEG1032','MEG1242','MEG1243','MEG1233',
          'MEG2433','MEG2022','MEG2023']
 
 ev_crop = evoked.copy()
+ev = evoked.copy()
 ev_crop.crop(tmin, tmax)
 
 if hemi == 'left':
@@ -60,7 +61,7 @@ max_ch = np.where(ev_crop.data == max(ev_crop.data.min(),
                                       ev_crop.data.max(), key=abs))[0]
 max_ch_name = ev_crop.info['ch_names'][max_ch[0]]
 print(max_ch_name)
-ev = ev_crop.pick_channels([max_ch_name])
+ev = ev.pick_channels([max_ch_name])
 peak = ev.get_peak(return_amplitude=True,
                       mode='abs') # early lip window value
 # plot all chanels
@@ -68,7 +69,7 @@ evoked.plot_topo()
 
 # plot chosen channel with peak latency
 plt.figure()
-plt.plot(evoked.times, evoked.data[0]*10**13)
+plt.plot(evoked.times, ev.data[0]*10**13)
 plt.axvline(peak[1], linestyle='-', color='r') # comment this out to take off red peak line
 plt.axvline(0, linestyle='--', color='g')
 plt.axhline(0, linestyle='-', color='k')
@@ -79,4 +80,4 @@ plt.suptitle('Max channel: %s' % peak[0])
 plt.show()
 
 # plot sensor location on head
-mne.viz.plot_sensors(ev_crop.info, show_names=True)
+mne.viz.plot_sensors(ev.info, show_names=True)

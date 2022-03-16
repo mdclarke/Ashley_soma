@@ -57,9 +57,8 @@ else:
   print("Choose left ot right hemispshere")
 
 # find channel with largest peak 
-max_ch = np.where(ev_crop.data == max(ev_crop.data.min(), 
-                                      ev_crop.data.max(), key=abs))[0]
-max_ch_name = ev_crop.info['ch_names'][max_ch[0]]
+max_ch = np.argmax(np.abs(ev_crop.data).max(axis=1))
+max_ch_name = ev_crop.info['ch_names'][max_ch]
 print(max_ch_name)
 ev = ev.pick_channels([max_ch_name])
 ev_crop.pick_channels([max_ch_name])

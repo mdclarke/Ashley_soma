@@ -37,6 +37,7 @@ right = []
 
 ## select channel selection ##
 hemi = 'left'
+tmin,tmax = 0.3,0.4
 
 subjects_dir = '/storage/Maggie/anat/subjects/'
 path = '/storage/'
@@ -62,6 +63,7 @@ elif hemi == 'right':
     evoked.pick_channels(right)
 else:
     print('choose left or right channel selection')
+evoked.crop(tmin, tmax)
     
 forward = mne.make_forward_solution(evoked.info, trans, src, bem)
 inv = mne.minimum_norm.make_inverse_operator(evoked.info, forward, cov)
